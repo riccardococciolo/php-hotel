@@ -70,7 +70,7 @@
       <td><?php echo $hotel['vote']; ?></td>
       <td><?php echo $hotel['distance_to_center']; ?></td>
     </tr>
-    <?php } ?>
+    <?php } ?> 
   </tbody>
 </table>
 </body>
