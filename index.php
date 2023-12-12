@@ -40,6 +40,19 @@
 
     ];
 
+    if (isset($_GET['parking']) && $_GET['parking'] !== '') {
+        $parkingFilter = filter_var($_GET['parking'], FILTER_VALIDATE_BOOLEAN);
+        $hotels = array_filter($hotels, function ($hotel) use ($parkingFilter) {
+            return $hotel['parking'] === $parkingFilter;
+        });
+    }
+    
+    if (isset($_GET['minVote']) && $_GET['minVote'] !== '') {
+        $minVoteFilter = filter_var($_GET['minVote'], FILTER_VALIDATE_INT);
+        $hotels = array_filter($hotels, function ($hotel) use ($minVoteFilter) {
+            return $hotel['vote'] >= $minVoteFilter;
+        });
+    }
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +64,21 @@
     <title>Document</title>
 </head>
 <body>
-<table class="table">
+<form method="get">
+    <label for="parking">Parcheggio:</label>
+    <select name="parking" id="parking">
+        <option value="">Qualsiasi</option>
+        <option value="1">Sì</option>
+        <option value="0">No</option>
+    </select>
+
+    <label for="minVote">Voto minimo:</label>
+    <input type="number" name="minVote" id="minVote" min="1" max="5">
+
+    <button type="submit">Filtra</button>
+</form>
+
+<table class="table table-striped table-hover">
   <thead>
     <tr>
       <th scope="col">NOME</th>
